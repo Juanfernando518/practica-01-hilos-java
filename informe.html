@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Práctico 01 - Hilos en Java</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fdfdfd;
+        }
+        .container {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 24px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+        }
+        h2 {
+            color: #2980b9;
+            margin-top: 25px;
+            font-size: 18px;
+        }
+        p, li {
+            font-size: 14px;
+            color: #444;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .link-box {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-left: 3px solid #3498db;
+            margin: 15px 0;
+            font-size: 14px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Informe Práctico 01: Procesamiento Secuencial y Paralelo con Hilos</h1>
+    <p><strong>Estudiante:</strong> Juan Fernando Álvarez Picón</p>
+    <p><strong>Materia:</strong> Computación Paralela</p>
+    
+    <div class="link-box">
+        <strong>Enlace al Repositorio:</strong> 
+        <a href="https://github.com/Juanfernando518/practica-01-hilos-java.git" target="_blank">
+            https://github.com/Juanfernando518/practica-01-hilos-java.git
+        </a>
+    </div>
+
+    <h2>1. Solución Implementada</h2>
+    <p>Para esta práctica, desarrollé un programa en Java que lee el libro completo de Don Quijote de la Mancha también una versión donde repetí el texto 100 veces para hacerlo más pesado. El programa calcula tres cosas: el total de palabras, la cantidad de veces que aparece exactamente la palabra "Quijote" y la cantidad de veces que aparece la secuencia "ción".
+    </p>
+    <p>Lo hice primero de forma secuencial, es decir, con un solo hilo que realiza todas las tareas paso a paso.
+Luego, creé la versión paralela utilizando directamente la clase Thread de Java. Dividí el texto en partes iguales para que varios hilos trabajaran al mismo tiempo. Usé start() para iniciar los hilos y join() para esperar a que terminaran, así pude reunir los resultados.
+    </p>
+
+    <h2>2. Datos de mi laptop</h2>
+    <ul>
+        <li><strong>Computadora:</strong> MSI</li>
+        <li><strong>Procesador:</strong> Intel Core i7 / i5</li>
+        <li><strong>Núcleos e Hilos:</strong> 8 núcleos físicos / 12 hilos lógicos</li>
+        <li><strong>Memoria RAM:</strong> 16 GB</li>
+        <li><strong>Sistema y Entorno:</strong> Windows 11 con Java JDK 21 en VS Code</li>
+    </ul>
+
+    <h2>3. Tabla con los tiempos que me salió</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Dataset</th>
+                <th>Tipo de Hilos</th>
+                <th>Tiempo promedio (ms)</th>
+                <th>Speedup (Aceleración)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Original</td>
+                <td>1 (Secuencial)</td>
+                <td>73.76 ms</td>
+                <td>1.00</td>
+            </tr>
+            <tr>
+                <td>Original</td>
+                <td>2 Hilos</td>
+                <td>29.26 ms</td>
+                <td>2.52</td>
+            </tr>
+            <tr>
+                <td>Original</td>
+                <td>4 Hilos</td>
+                <td>11.18 ms</td>
+                <td>6.59</td>
+            </tr>
+            <tr>
+                <td>Ampliado (100x)</td>
+                <td>1 (Secuencial)</td>
+                <td>2,718.34 ms</td>
+                <td>1.00</td>
+            </tr>
+            <tr>
+                <td>Ampliado (100x)</td>
+                <td>2 Hilos</td>
+                <td>1,541.45 ms</td>
+                <td>1.76</td>
+            </tr>
+            <tr>
+                <td>Ampliado (100x)</td>
+                <td>4 Hilos</td>
+                <td>931.36 ms</td>
+                <td>2.92</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>4. Análisis y respuestas a las preguntas</h2>
+    <ol>
+        <li>
+            <strong>¿Qué diferencias se notan entre los tiempos secuenciales y paralelos?</strong><br>
+            Se nota claramente que el modo secuencial se demora más porque procesa todo seguido en un solo hilo. Cuando usé hilos en paralelo, el trabajo se reparte y el tiempo total baja bastante.
+        </li>
+        <li>
+            <strong>¿Cómo influye la cantidad de hilos?</strong><br>
+            Meter más hilos ayuda a que baje el tiempo. Al pasar de 2 a 4 hilos el programa respondió mucho más rápido porque aprovechó mejor los núcleos del procesador de mi laptop.
+        </li>
+        <li>
+            <strong>¿Qué pasa cuando se agranda el documento?</strong><br>
+            Con el texto multiplicado 100 veces, el peso se nota la diferencia y el tiempo secuencial sube a más de 2 segundos y medio. Pero ahí es justo donde el procesamiento paralelo vale la pena, porque con 4 hilos bajó considerablemente el tiempo a pesar de la cantidad enorme de datos.
+        </li>
+        <li>
+            <strong>¿El procesamiento paralelo siempre es más rápido?</strong><br>
+             Si el texto fuera diminuto, crear los hilos y sincronizarlos con <code>join()</code> tomaría más tiempo que hacer la tarea de una sola pasada en secuencial. Solo conviene cuando hay bastante carga de trabajo.
+        </li>
+    </ol>
+
+    <h2>5. Mis conclusiones</h2>
+    <ul>Trabajar con la clase Thread me sirvió para entender cómo Java reparte las tareas y cómo se manejan los resultados parciales de cada hilo, quedando comprobado que dividir un texto gigante en partes mejora los tiempos de respuesta de forma bien notable; además, los datos finales del conteo salieron exactamente iguales tanto en secuencial como en paralelo, lo que confirma que la división de los bloques no rompió ninguna palabra ni alteró la lógica del programa.
+    </ul>
+</div>
+
+</body>
+</html>
